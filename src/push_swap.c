@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: chustei <chustei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/19 18:30:57 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/19 23:39:44 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int	ft_atoi_for_each(char **args)
 			ft_perror("Provide Only Numeric Arguments");
 			return (1);
 		}
+		if (ft_strchr(args[i], ' '))
+		{
+			ft_perror("Provide a String or a Set of Numbers");
+			return (1);
+		}
 		ft_printf("%i ", ft_atoi(args[i]));
 		i++;
 	}
@@ -54,7 +59,7 @@ int	main(int ac, char **av)
 {
 	if (ac == 2)
 	{
-		if (!(ft_strchr(av[1], ' ')))
+		if (ft_strchr(av[1], ' '))
 			ft_atoi_for_each(av);
 		ft_atoi_for_each(ft_split(av[1], ' '));
 	}
@@ -65,7 +70,7 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-/* 
+/*
 Uusefull Link
-https://42-cursus.gitbook.io/guide/rank-02/so_long/building-the-thing 
+https://42-cursus.gitbook.io/guide/rank-02/so_long/building-the-thing
 */
