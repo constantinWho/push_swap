@@ -3,53 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chustei <chustei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/19 23:39:44 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/23 22:24:38 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib/libft/inc/libft.h"
 
-void	ft_perror(char *message)
-{
-	ft_printf("Error\n");
-	ft_printf("%s\n", message);
-}
-
-int	ft_check_zero(char *num)
-{
-	int	i;
-
-	i = 0;
-	while (num[i])
-	{
-		if (num[i] != '0')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	ft_atoi_for_each(char **args)
 {
 	int	i;
+	int	*nums;
+
+	i = 1;
+	while (args[i])
+		i++;
+	nums = (int *)malloc(sizeof(int) * i);
+	i = 1;
+	while (args[i])
+	{
+		if (ft_atoi(args[i]) == 0)
+			return (1);
+/* 		ft_printf("%i ", ft_atoi(args[i])); */
+		nums[i -1] = ft_atoi(args[i]);
+		i++;
+	}
+	i = -1;
+	while (nums[++i])
+		ft_printf("%i ", nums[i]);
+	free(nums);
+	return (0);
+}
+
+int	ft_check_numeric(char **args)
+{
+	int	i;
+	int	j;
 
 	i = 1;
 	while (args[i])
 	{
-		if ((ft_atoi(args[i]) == 0 && ft_check_zero(args[i]) != 0))
+		j = 0;
+		while (args[i][j])
 		{
-			ft_perror("Provide Only Numeric Arguments");
-			return (1);
+			if (args[i][j] == '-' || args[i][j] == '+')
+				j++;
+			if (ft_isdigit(args[i][j]) == 0)
+				return (1);
+			j++;
 		}
-		if (ft_strchr(args[i], ' '))
-		{
-			ft_perror("Provide a String or a Set of Numbers");
-			return (1);
-		}
-		ft_printf("%i ", ft_atoi(args[i]));
 		i++;
 	}
 	return (0);
@@ -57,16 +61,13 @@ int	ft_atoi_for_each(char **args)
 
 int	main(int ac, char **av)
 {
-	if (ac == 2)
+	if (ac > 1)
 	{
-		if (ft_strchr(av[1], ' '))
-			ft_atoi_for_each(av);
-		ft_atoi_for_each(ft_split(av[1], ' '));
+		if (ft_check_numeric(av) == 1 || ft_atoi_for_each(av) == 1)
+			ft_printf("Error\n");
 	}
-	else if (ac > 2)
-		ft_atoi_for_each(av);
 	else
-		ft_perror("No Argumets Provided");
+		ft_printf("Error\n");
 	return (0);
 }
 
