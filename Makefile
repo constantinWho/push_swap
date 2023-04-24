@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = lib/libft
 
 # List of source files
-SRCS = src/push_swap.c \
+SRCS = src/push_swap.c src/check_utils.c\
 
 # List of object files to build
 OBJS = $(SRCS:.c=.o)
