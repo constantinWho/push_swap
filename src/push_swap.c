@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/26 13:25:14 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/26 16:35:43 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	quicksort(int *arr, int left, int right)
 
 	if (left < right)
 	{
-		pivot = arr[left]; // choose first element as pivot
+		pivot = arr[right]; // choose last element as pivot
 		i = left;
 		j = right;
 		while (i < j)
@@ -41,6 +41,8 @@ void	quicksort(int *arr, int left, int right)
 			if (i <= j)
 			{
 				swap(&arr[i], &arr[j]); // swap elements
+				if (arr[0] > arr[1])
+					ft_printf("sa\n");
 				i++;
 				j--;
 			}
@@ -72,6 +74,22 @@ int	*ft_store_nums(char **av, int size)
 	return (nums);
 }
 
+void	ft_push_swap(int *nums, int size)
+{
+	if (size == 2)
+	{
+		if (nums[0] > nums[1])
+			return ;
+		else
+			ft_printf("sa\n");
+	}
+	if (size == 3)
+	{
+		
+	}
+	free(nums);
+}
+
 int	main(int ac, char **av)
 {
 	int	*nums;
@@ -89,7 +107,7 @@ int	main(int ac, char **av)
 		if (ft_check_double(nums, size) == 1)
 			return (1);
 		ft_check_output(nums, size);
-		free (nums);
+		ft_push_swap(nums, size);
 	}
 	else
 	{
