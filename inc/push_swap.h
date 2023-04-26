@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:52:26 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/25 10:44:24 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/26 13:23:25 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define PUSH_SWAP_H
 # include "../lib/libft/inc/libft.h"
 
-int	ft_check_numeric(char **args);
-int	ft_check_double(int *nums, int size);
-int	ft_check_zero(char *nums);
+int		ft_check_numeric(char **args);
+int		ft_check_double(int *nums, int size);
+int		ft_check_zero(char *nums);
+int		ft_check_atoi(char **av);
+void	ft_check_output(int *nums, int size);
+void	quicksort(int *arr, int left, int right);
 
 #endif
