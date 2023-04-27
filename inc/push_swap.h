@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:52:26 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/26 14:12:11 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:04:32 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int		ft_check_double(int *nums, int size);
 int		ft_check_zero(char *nums);
 int		ft_check_atoi(char **av);
 void	ft_check_output(int *nums, int size);
-void	quicksort(int *arr, int left, int right);
+void	ft_push_swap(int *nums, int size);
+void	ft_sort_hundred(int *nums, int size);
+void	ft_sort_five(int *nums, int size);
+void	ft_sort_four(int *nums, int size);
+void	ft_sort_three(int *nums);
+void	ft_swap_a(int *nums);
+int		*ft_sort(int *nums, int size);
 
 #endif

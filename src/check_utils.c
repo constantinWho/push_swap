@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:25:09 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/26 14:12:20 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:11:23 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,6 @@ void	ft_check_output(int *nums, int size)
 {
 	int	i;
 
-	i = 0;
-	while (i < size)
-		ft_printf("%i ", nums[i++]);
-	ft_printf("\n");
-	quicksort(nums, 0, size - 1);
 	i = 0;
 	while (i < size)
 		ft_printf("%i ", nums[i++]);
