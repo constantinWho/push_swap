@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: chustei <chustei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/27 16:12:45 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:59:04 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-int	ft_get_size(char **av)
+int ft_get_size(char **av)
 {
-	int	size;
+	int size;
 
 	size = 1;
 	while (av[size])
@@ -22,10 +22,10 @@ int	ft_get_size(char **av)
 	return (size - 1);
 }
 
-int	*ft_store_nums(char **av, int size)
+int *ft_store_nums(char **av, int size)
 {
-	int	i;
-	int	*nums;
+	int i;
+	int *nums;
 
 	nums = (int *)malloc(sizeof(int) * size);
 	i = 0;
@@ -34,14 +34,12 @@ int	*ft_store_nums(char **av, int size)
 	return (nums);
 }
 
-
-
-int	*ft_sort(int *nums, int size)
+int *ft_sort(int *nums, int size)
 {
-	int	*sorted;
-	int	i;
-	int	j;
-	int	temp;
+	int *sorted;
+	int i;
+	int j;
+	int temp;
 
 	sorted = (int *)malloc(sizeof(int) * size);
 	i = -1;
@@ -68,9 +66,9 @@ int	*ft_sort(int *nums, int size)
 	return (sorted);
 }
 
-void	ft_swap_a(int *nums)
+void ft_swap_a(int *nums)
 {
-	int	temp;
+	int temp;
 
 	temp = nums[0];
 	nums[0] = nums[1];
@@ -78,31 +76,31 @@ void	ft_swap_a(int *nums)
 	ft_printf("sa\n");
 }
 
-void	ft_sort_three(int *nums)
+void ft_sort_three(int *nums)
 {
 	if (nums[0] > nums[1] && nums[1] < nums[2] && nums[0] < nums[2])
-	{
 		ft_printf("sa\n");
-		ft_printf("ra\n");
-	}
 	else if (nums[0] > nums[1] && nums[1] > nums[2])
 	{
 		ft_printf("sa\n");
 		ft_printf("rra\n");
 	}
 	else if (nums[0] > nums[1] && nums[1] < nums[2] && nums[0] > nums[2])
-		ft_printf("sa\n");
-	else if (nums[0] < nums[1] && nums[1] > nums[2] && nums[0] < nums[2])
 		ft_printf("ra\n");
+	else if (nums[0] < nums[1] && nums[1] > nums[2] && nums[0] < nums[2])
+	{
+		ft_printf("rra\n");
+		ft_printf("sa\n");
+	}
 	else if (nums[0] < nums[1] && nums[1] > nums[2] && nums[0] > nums[2])
 		ft_printf("rra\n");
 }
 
-void	ft_sort_four(int *nums, int size)
+void ft_sort_four(int *nums, int size)
 {
-	int	i;
-	int	min;
-	int	pos;
+	int i;
+	int min;
+	int pos;
 
 	i = 0;
 	min = nums[0];
@@ -118,20 +116,20 @@ void	ft_sort_four(int *nums, int size)
 	if (pos == 0)
 		ft_printf("pb\n");
 	else if (pos == 1)
-		ft_printf("sb\npb\n");
+		ft_printf("sa\npb\n");
 	else if (pos == 2)
-		ft_printf("rrb\npb\n");
+		ft_printf("ra\nra\npb\n");
 	else if (pos == 3)
-		ft_printf("rb\nsb\npb\n");
+		ft_printf("rra\npb\n");
 	ft_sort_three(nums);
 	ft_printf("pa\n");
 }
 
-void	ft_sort_five(int *nums, int size)
+void ft_sort_five(int *nums, int size)
 {
-	int	i;
-	int	min;
-	int	pos;
+	int i;
+	int min;
+	int pos;
 
 	i = 0;
 	min = nums[0];
@@ -147,22 +145,22 @@ void	ft_sort_five(int *nums, int size)
 	if (pos == 0)
 		ft_printf("pb\n");
 	else if (pos == 1)
-		ft_printf("sb\npb\n");
+		ft_printf("sa\npb\n");
 	else if (pos == 2)
-		ft_printf("rrb\npb\n");
+		ft_printf("ra\nra\npb\n");
 	else if (pos == 3)
-		ft_printf("rb\nsb\npb\n");
+		ft_printf("rra\nrra\npb\n");
 	else if (pos == 4)
-		ft_printf("rrb\nsb\npb\n");
+		ft_printf("rra\npb\n");
 	ft_sort_four(nums, size - 1);
 	ft_printf("pa\n");
 }
 
-void	ft_sort_hundred(int *nums, int size)
+void ft_sort_hundred(int *nums, int size)
 {
-	int	i;
-	int	min;
-	int	pos;
+	int i;
+	int min;
+	int pos;
 
 	i = 0;
 	min = nums[0];
@@ -178,23 +176,23 @@ void	ft_sort_hundred(int *nums, int size)
 	if (pos == 0)
 		ft_printf("pb\n");
 	else if (pos == 1)
-		ft_printf("sb\npb\n");
+		ft_printf("sa\npb\n");
 	else if (pos == 2)
-		ft_printf("rrb\npb\n");
+		ft_printf("ra\nra\npb\n");
 	else if (pos == 3)
-		ft_printf("rb\nsb\npb\n");
+		ft_printf("ra\nra\nra\npb\n");
 	else if (pos == 4)
-		ft_printf("rrb\nsb\npb\n");
+		ft_printf("ra\nra\nra\ra\npb\n");
 	if (size == 0)
-		return ;
+		return;
 	ft_sort_hundred(nums, size - 1);
 	ft_printf("pa\n");
 }
 
-void	ft_push_swap(int *nums, int size)
+void ft_push_swap(int *nums, int size)
 {
-	int	*sorted;
-	int	i;
+	int *sorted;
+	int i;
 
 	sorted = ft_sort(nums, size);
 	i = 0;
@@ -212,17 +210,17 @@ void	ft_push_swap(int *nums, int size)
 				ft_sort_five(nums, size);
 			else
 				ft_sort_hundred(nums, size);
-			break ;
+			break;
 		}
 		i++;
 	}
 	free(sorted);
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	int	*nums;
-	int	size;
+	int *nums;
+	int size;
 
 	if (ac > 1)
 	{
