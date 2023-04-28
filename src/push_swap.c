@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/28 16:59:04 by chustei          ###   ########.fr       */
+/*   Updated: 2023/04/28 23:53:33 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,204 +22,136 @@ int ft_get_size(char **av)
 	return (size - 1);
 }
 
-int *ft_store_nums(char **av, int size)
+int *ft_store_stack_a(char **av, int size)
 {
 	int i;
-	int *nums;
+	int *stack_a;
 
-	nums = (int *)malloc(sizeof(int) * size);
+	stack_a = (int *)malloc(sizeof(int) * size);
 	i = 0;
 	while (av[++i])
-		nums[i - 1] = ft_atoi(av[i]);
-	return (nums);
+		stack_a[i - 1] = ft_atoi(av[i]);
+	return (stack_a);
 }
 
-int *ft_sort(int *nums, int size)
+int ft_min_pos(int *stack_a, int size)
 {
-	int *sorted;
 	int i;
-	int j;
-	int temp;
+	int pos;
+	int min;
 
-	sorted = (int *)malloc(sizeof(int) * size);
-	i = -1;
-	while (++i < size)
-		sorted[i] = nums[i];
-	i = -1;
+	pos = 0;
+	min = stack_a[0];
+	i = 0;
 	while (++i < size)
 	{
-		j = i;
-		while (++j < size)
+		if (stack_a[i] < min)
 		{
-			if (sorted[i] > sorted[j])
-			{
-				temp = sorted[i];
-				sorted[i] = sorted[j];
-				sorted[j] = temp;
-			}
+			min = stack_a[i];
+			pos = i;
 		}
 	}
+	return (pos);
+}
+
+void ft_ra(int *stack, int pos, int size)
+{
+	int *new_stack;
+	int i;
+	int rest;
+
 	i = 0;
-	while (i < size)
-		ft_printf("%i ", sorted[i++]);
-	ft_printf("\n");
-	return (sorted);
-}
-
-void ft_swap_a(int *nums)
-{
-	int temp;
-
-	temp = nums[0];
-	nums[0] = nums[1];
-	nums[1] = temp;
-	ft_printf("sa\n");
-}
-
-void ft_sort_three(int *nums)
-{
-	if (nums[0] > nums[1] && nums[1] < nums[2] && nums[0] < nums[2])
-		ft_printf("sa\n");
-	else if (nums[0] > nums[1] && nums[1] > nums[2])
+	rest = 0;
+	new_stack = (int *)malloc(sizeof(int) * size);
+	while (pos < size)
 	{
-		ft_printf("sa\n");
-		ft_printf("rra\n");
+		new_stack[i] = stack[pos];
+		i++;
+		pos++;
 	}
-	else if (nums[0] > nums[1] && nums[1] < nums[2] && nums[0] > nums[2])
+	while (i < size)
+	{
+		new_stack[i] = stack[rest];
+		i++;
+		rest++;
 		ft_printf("ra\n");
-	else if (nums[0] < nums[1] && nums[1] > nums[2] && nums[0] < nums[2])
-	{
-		ft_printf("rra\n");
-		ft_printf("sa\n");
 	}
-	else if (nums[0] < nums[1] && nums[1] > nums[2] && nums[0] > nums[2])
-		ft_printf("rra\n");
-}
-
-void ft_sort_four(int *nums, int size)
-{
-	int i;
-	int min;
-	int pos;
-
-	i = 0;
-	min = nums[0];
-	pos = 0;
-	while (++i < size)
-	{
-		if (nums[i] < min)
-		{
-			min = nums[i];
-			pos = i;
-		}
-	}
-	if (pos == 0)
-		ft_printf("pb\n");
-	else if (pos == 1)
-		ft_printf("sa\npb\n");
-	else if (pos == 2)
-		ft_printf("ra\nra\npb\n");
-	else if (pos == 3)
-		ft_printf("rra\npb\n");
-	ft_sort_three(nums);
-	ft_printf("pa\n");
-}
-
-void ft_sort_five(int *nums, int size)
-{
-	int i;
-	int min;
-	int pos;
-
-	i = 0;
-	min = nums[0];
-	pos = 0;
-	while (++i < size)
-	{
-		if (nums[i] < min)
-		{
-			min = nums[i];
-			pos = i;
-		}
-	}
-	if (pos == 0)
-		ft_printf("pb\n");
-	else if (pos == 1)
-		ft_printf("sa\npb\n");
-	else if (pos == 2)
-		ft_printf("ra\nra\npb\n");
-	else if (pos == 3)
-		ft_printf("rra\nrra\npb\n");
-	else if (pos == 4)
-		ft_printf("rra\npb\n");
-	ft_sort_four(nums, size - 1);
-	ft_printf("pa\n");
-}
-
-void ft_sort_hundred(int *nums, int size)
-{
-	int i;
-	int min;
-	int pos;
-
-	i = 0;
-	min = nums[0];
-	pos = 0;
-	while (++i < size)
-	{
-		if (nums[i] < min)
-		{
-			min = nums[i];
-			pos = i;
-		}
-	}
-	if (pos == 0)
-		ft_printf("pb\n");
-	else if (pos == 1)
-		ft_printf("sa\npb\n");
-	else if (pos == 2)
-		ft_printf("ra\nra\npb\n");
-	else if (pos == 3)
-		ft_printf("ra\nra\nra\npb\n");
-	else if (pos == 4)
-		ft_printf("ra\nra\nra\ra\npb\n");
-	if (size == 0)
-		return;
-	ft_sort_hundred(nums, size - 1);
-	ft_printf("pa\n");
-}
-
-void ft_push_swap(int *nums, int size)
-{
-	int *sorted;
-	int i;
-
-	sorted = ft_sort(nums, size);
 	i = 0;
 	while (i < size)
 	{
-		if (nums[i] != sorted[i])
-		{
-			if (size == 2)
-				ft_swap_a(nums);
-			else if (size == 3)
-				ft_sort_three(nums);
-			else if (size == 4)
-				ft_sort_four(nums, size);
-			else if (size == 5)
-				ft_sort_five(nums, size);
-			else
-				ft_sort_hundred(nums, size);
-			break;
-		}
+		stack[i] = new_stack[i];
 		i++;
 	}
-	free(sorted);
+	free(new_stack);
+}
+
+void ft_rra(int *stack, int pos, int size)
+{
+	int *new_stack;
+	int i;
+	int rest;
+
+	i = 0;
+	rest = 0;
+	new_stack = (int *)malloc(sizeof(int) * size);
+	while (pos < size)
+	{
+		new_stack[i] = stack[pos];
+		i++;
+		pos++;
+	}
+	while (i < size)
+	{
+		new_stack[i] = stack[rest];
+		i++;
+		rest++;
+		ft_printf("rra\n");
+	}
+	i = 0;
+	while (i < size)
+	{
+		stack[i] = new_stack[i];
+		i++;
+	}
+	free(new_stack);
+}
+
+int ft_check_sorted(int *stack_a, int size)
+{
+	int i;
+	int curr;
+
+	i = 0;
+	while (++i < size)
+	{
+		curr = stack_a[i - 1];
+		if (curr > stack_a[i])
+			return (1);
+	}
+	return (0);
+}
+
+void ft_push_swap(int *stack_a, int size)
+{
+	// int *stack_b;
+	int min_pos;
+
+	// stack_b = (int *)malloc(sizeof(int) * size);
+	if (size > 1)
+	{
+		min_pos = ft_min_pos(stack_a, size);
+		if (size - min_pos > size / 2)
+			ft_ra(stack_a, min_pos, size);
+		else
+			ft_rra(stack_a, min_pos, size);
+		if (ft_check_sorted(stack_a, size) == 1)
+			ft_printf("pb\n");
+	}
 }
 
 int main(int ac, char **av)
 {
-	int *nums;
+	int *stack_a;
 	int size;
 
 	if (ac > 1)
@@ -230,11 +162,12 @@ int main(int ac, char **av)
 			return (1);
 		}
 		size = ft_get_size(av);
-		nums = ft_store_nums(av, size);
-		if (ft_check_double(nums, size) == 1)
+		stack_a = ft_store_stack_a(av, size);
+		if (ft_check_double(stack_a, size) == 1)
 			return (1);
-		ft_check_output(nums, size);
-		ft_push_swap(nums, size);
+		ft_check_output(stack_a, size);
+		ft_push_swap(stack_a, size);
+		ft_check_output(stack_a, size);
 	}
 	else
 	{
