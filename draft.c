@@ -118,15 +118,15 @@ void ft_sort_hundred(int *nums, int size)
 	else if (pos == 4)
 		ft_printf("ra\nra\nra\ra\npb\n");
 	if (size == 0)
-		return;
+		return ;
 	ft_sort_hundred(nums, size - 1);
 	ft_printf("pa\n");
 }
 
-void ft_push_swap(int *nums, int size)
+void	ft_push_swap(int *nums, int size)
 {
-	int *sorted;
-	int i;
+	int	*sorted;
+	int	i;
 
 	sorted = ft_sort(nums, size);
 	i = 0;

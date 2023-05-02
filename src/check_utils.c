@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:25:09 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/27 16:11:23 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:03:31 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,20 @@ int	ft_check_numeric(char **args)
 	return (0);
 }
 
-int	ft_check_double(int *nums, int size)
+int	ft_check_double(t_stack *stack)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < size)
+	while (i < stack->size_a)
 	{
 		j = i + 1;
-		while (j < size)
+		while (j < stack->size_a)
 		{
-			if (nums[j] == nums[i])
+			if (stack->a[j] == stack->a[i])
 			{
-				free (nums);
+				free (stack->a);
 				ft_printf("Error\n");
 				return (1);
 			}
@@ -86,12 +86,18 @@ int	ft_check_atoi(char **av)
 	return (0);
 }
 
-void	ft_check_output(int *nums, int size)
+void	ft_check_output(t_stack	*stack)
 {
 	int	i;
 
 	i = 0;
-	while (i < size)
-		ft_printf("%i ", nums[i++]);
+	ft_printf("stack_a: ");
+	while (i < stack->size_a)
+		ft_printf("%i ", stack->a[i++]);
+	i = 0;
+	ft_printf("\n");
+	ft_printf("stack_b: ");
+	while (i < stack->size_b)
+		ft_printf("%i ", stack->b[i++]);
 	ft_printf("\n");
 }

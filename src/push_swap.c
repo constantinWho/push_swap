@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chustei <chustei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/04/28 23:53:33 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:08:16 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-int ft_get_size(char **av)
+int	ft_get_size(char **av)
 {
-	int size;
+	int	size;
 
 	size = 1;
 	while (av[size])
@@ -22,23 +22,20 @@ int ft_get_size(char **av)
 	return (size - 1);
 }
 
-int *ft_store_stack_a(char **av, int size)
+void	ft_store_stack_a(char **av, t_stack *stack)
 {
-	int i;
-	int *stack_a;
+	int	i;
 
-	stack_a = (int *)malloc(sizeof(int) * size);
 	i = 0;
 	while (av[++i])
-		stack_a[i - 1] = ft_atoi(av[i]);
-	return (stack_a);
+		stack->a[i - 1] = ft_atoi(av[i]);
 }
 
-int ft_min_pos(int *stack_a, int size)
+int	ft_min_pos(int *stack_a, int size)
 {
-	int i;
-	int pos;
-	int min;
+	int	i;
+	int	pos;
+	int	min;
 
 	pos = 0;
 	min = stack_a[0];
@@ -54,11 +51,11 @@ int ft_min_pos(int *stack_a, int size)
 	return (pos);
 }
 
-void ft_ra(int *stack, int pos, int size)
+void	ft_rotate(int *stack, int pos, int size, char *move)
 {
-	int *new_stack;
-	int i;
-	int rest;
+	int		*new_stack;
+	int		i;
+	int		rest;
 
 	i = 0;
 	rest = 0;
@@ -68,13 +65,16 @@ void ft_ra(int *stack, int pos, int size)
 		new_stack[i] = stack[pos];
 		i++;
 		pos++;
+		if (ft_strncmp(move, "rra", 3) == 0)
+			ft_printf("%s\n", move);
 	}
 	while (i < size)
 	{
 		new_stack[i] = stack[rest];
 		i++;
 		rest++;
-		ft_printf("ra\n");
+		if (ft_strncmp(move, "ra", 2) == 0)
+			ft_printf("%s\n", move);
 	}
 	i = 0;
 	while (i < size)
@@ -85,41 +85,21 @@ void ft_ra(int *stack, int pos, int size)
 	free(new_stack);
 }
 
-void ft_rra(int *stack, int pos, int size)
+void	ft_swap(int *a, int *b)
 {
-	int *new_stack;
-	int i;
-	int rest;
+	int	tmp;
 
-	i = 0;
-	rest = 0;
-	new_stack = (int *)malloc(sizeof(int) * size);
-	while (pos < size)
-	{
-		new_stack[i] = stack[pos];
-		i++;
-		pos++;
-	}
-	while (i < size)
-	{
-		new_stack[i] = stack[rest];
-		i++;
-		rest++;
-		ft_printf("rra\n");
-	}
-	i = 0;
-	while (i < size)
-	{
-		stack[i] = new_stack[i];
-		i++;
-	}
-	free(new_stack);
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+	ft_printf("%i %i ", *a, *b);
+	ft_printf("sa\n");
 }
 
-int ft_check_sorted(int *stack_a, int size)
+int	ft_check_sorted(int *stack_a, int size)
 {
-	int i;
-	int curr;
+	int	i;
+	int	curr;
 
 	i = 0;
 	while (++i < size)
@@ -131,29 +111,104 @@ int ft_check_sorted(int *stack_a, int size)
 	return (0);
 }
 
-void ft_push_swap(int *stack_a, int size)
+void	ft_push_b(t_stack *stack)
 {
-	// int *stack_b;
-	int min_pos;
+	int	i;
 
-	// stack_b = (int *)malloc(sizeof(int) * size);
-	if (size > 1)
+	i = stack->size_b;
+	while (--i > 0)
+		stack->b[i] = stack->b[i - 1];
+	stack->b[0] = stack->a[0];
+	i = 0;
+	while (++i < stack->size_a)
 	{
-		min_pos = ft_min_pos(stack_a, size);
-		if (size - min_pos > size / 2)
-			ft_ra(stack_a, min_pos, size);
-		else
-			ft_rra(stack_a, min_pos, size);
-		if (ft_check_sorted(stack_a, size) == 1)
-			ft_printf("pb\n");
+		stack->a[i - 1] = stack->a[i];
+		ft_printf("%d ", stack->a[i - 1]);
 	}
+	stack->size_a--;
+	stack->size_b++;
+	ft_printf("pb\n");
 }
 
-int main(int ac, char **av)
+void	ft_push_a(t_stack *stack)
 {
-	int *stack_a;
-	int size;
+	int	i;
 
+	ft_check_output(stack);
+	i = stack->size_a;
+	while (--i >= 0)
+		stack->a[i + 1] = stack->a[i];
+	stack->a[0] = stack->b[0];
+	i = 0;
+	while (++i < stack->size_b)
+		stack->b[i - 1] = stack->b[i];
+	stack->size_a++;
+	stack->size_b--;
+	ft_printf("pa\n");
+}
+
+/* void	ft_push_a(t_stack *stack)
+{
+	int	i;
+
+	ft_check_output(stack);
+	if (stack->size_b == 0)
+		return ;
+	stack->size_a++;
+	stack->a[stack->size_a - 1] = stack->b[0];
+	i = 0;
+	while (i < stack->size_b - 1)
+	{
+		stack->b[i] = stack->b[i + 1];
+		i++;
+	}
+	stack->size_b--;
+	ft_printf("pa\n");
+}
+ */
+/* void	ft_push_a(t_stack *stack)
+{
+	int	i;
+
+	ft_check_output(stack);
+	i = stack->size_a;
+	while (--i > 0)
+		stack->a[i] = stack->a[i - 1];
+	stack->a[0] = stack->b[0];
+	i = 0;
+	while (++i < stack->size_b)
+		stack->b[i - 1] = stack->b[i];
+	stack->size_a++;
+	stack->size_b--;
+	ft_printf("pa\n");
+} */
+
+void	ft_push_swap(t_stack *stack)
+{
+	int	min_pos;
+
+	if (stack->size_a > 1)
+	{
+		min_pos = ft_min_pos(stack->a, stack->size_a);
+		if (stack->size_a - min_pos > stack->size_a / 2)
+			ft_rotate(stack->a, min_pos, stack->size_a, "ra");
+		else
+			ft_rotate(stack->a, min_pos, stack->size_a, "rra");
+		if (ft_check_sorted(stack->a, stack->size_a) == 1)
+			ft_push_b(stack);
+		if (stack->a[0] > stack->a[1])
+			ft_swap(&stack->a[0], &stack->a[1]);
+		if (ft_check_sorted(stack->a, stack->size_a) == 1)
+			ft_push_swap(stack);
+	}
+	ft_push_a(stack);
+}
+
+int	main(int ac, char **av)
+{
+	t_stack	*stack;
+
+	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (ac > 1)
 	{
 		if (ft_check_numeric(av) == 1 || ft_check_atoi(av) == 1)
@@ -161,13 +216,16 @@ int main(int ac, char **av)
 			ft_printf("Error\n");
 			return (1);
 		}
-		size = ft_get_size(av);
-		stack_a = ft_store_stack_a(av, size);
-		if (ft_check_double(stack_a, size) == 1)
+		stack->size_a = ft_get_size(av);
+		stack->size_b = 0;
+		stack->a = (int *)malloc(sizeof(int) * stack->size_a);
+		stack->b = (int *)malloc(sizeof(int) * stack->size_a);
+		ft_store_stack_a(av, stack);
+		if (ft_check_double(stack) == 1)
 			return (1);
-		ft_check_output(stack_a, size);
-		ft_push_swap(stack_a, size);
-		ft_check_output(stack_a, size);
+		ft_check_output(stack);
+		ft_push_swap(stack);
+		ft_check_output(stack);
 	}
 	else
 	{
