@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/02 15:08:16 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/02 16:54:06 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	ft_swap(int *a, int *b)
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
-	ft_printf("%i %i ", *a, *b);
 	ft_printf("sa\n");
 }
 
@@ -121,10 +120,7 @@ void	ft_push_b(t_stack *stack)
 	stack->b[0] = stack->a[0];
 	i = 0;
 	while (++i < stack->size_a)
-	{
 		stack->a[i - 1] = stack->a[i];
-		ft_printf("%d ", stack->a[i - 1]);
-	}
 	stack->size_a--;
 	stack->size_b++;
 	ft_printf("pb\n");
@@ -134,7 +130,6 @@ void	ft_push_a(t_stack *stack)
 {
 	int	i;
 
-	ft_check_output(stack);
 	i = stack->size_a;
 	while (--i >= 0)
 		stack->a[i + 1] = stack->a[i];
@@ -147,47 +142,33 @@ void	ft_push_a(t_stack *stack)
 	ft_printf("pa\n");
 }
 
-/* void	ft_push_a(t_stack *stack)
+void ft_sort_three(t_stack *stack)
 {
-	int	i;
-
-	ft_check_output(stack);
-	if (stack->size_b == 0)
-		return ;
-	stack->size_a++;
-	stack->a[stack->size_a - 1] = stack->b[0];
-	i = 0;
-	while (i < stack->size_b - 1)
+	if (stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] && stack->a[0] < stack->a[2])
+		ft_swap(&stack->a[0], &stack->a[1]);
+	else if (stack->a[0] > stack->a[1] && stack->a[1] > stack->a[2])
 	{
-		stack->b[i] = stack->b[i + 1];
-		i++;
+		ft_swap(&stack->a[0], &stack->a[1]);
+		ft_rotate(stack->a, 2, stack->size_a, "rra");
 	}
-	stack->size_b--;
-	ft_printf("pa\n");
+	else if (stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] && stack->a[0] > stack->a[2])
+		ft_rotate(stack->a, 1, stack->size_a, "ra");
+	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] && stack->a[0] < stack->a[2])
+	{
+		ft_rotate(stack->a, 0, stack->size_a, "rra");
+		ft_swap(&stack->a[0], &stack->a[1]);
+	}
+	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] && stack->a[0] > stack->a[2])
+		ft_rotate(stack->a, 2, stack->size_a, "rra");
 }
- */
-/* void	ft_push_a(t_stack *stack)
-{
-	int	i;
-
-	ft_check_output(stack);
-	i = stack->size_a;
-	while (--i > 0)
-		stack->a[i] = stack->a[i - 1];
-	stack->a[0] = stack->b[0];
-	i = 0;
-	while (++i < stack->size_b)
-		stack->b[i - 1] = stack->b[i];
-	stack->size_a++;
-	stack->size_b--;
-	ft_printf("pa\n");
-} */
 
 void	ft_push_swap(t_stack *stack)
 {
 	int	min_pos;
 
-	if (stack->size_a > 1)
+	if (stack->size_a == 3)
+		ft_sort_three(stack);
+	else if (stack->size_a > 3)
 	{
 		min_pos = ft_min_pos(stack->a, stack->size_a);
 		if (stack->size_a - min_pos > stack->size_a / 2)
@@ -196,12 +177,10 @@ void	ft_push_swap(t_stack *stack)
 			ft_rotate(stack->a, min_pos, stack->size_a, "rra");
 		if (ft_check_sorted(stack->a, stack->size_a) == 1)
 			ft_push_b(stack);
-		if (stack->a[0] > stack->a[1])
-			ft_swap(&stack->a[0], &stack->a[1]);
 		if (ft_check_sorted(stack->a, stack->size_a) == 1)
 			ft_push_swap(stack);
+		ft_push_a(stack);
 	}
-	ft_push_a(stack);
 }
 
 int	main(int ac, char **av)
