@@ -4,7 +4,8 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = lib/libft
 
 # List of source files
-SRCS = src/push_swap.c src/check_utils.c\
+SRCS = src/main.c src/check_utils.c src/push_swap.c src/push.c src/rotate.c \
+       src/init_and_free.c \
 
 # List of object files to build
 OBJS = $(SRCS:.c=.o)
@@ -22,7 +23,7 @@ $(LIBFT_DIR)/libft.a: $(LIBFT_DIR)/src/*.c
 
 # Rule to build object files
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -g
 
 # Remove object files and executables
 clean:
