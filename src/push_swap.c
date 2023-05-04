@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 11:03:53 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/03 19:22:00 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:18:08 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_push_swap(t_stack *stack)
 
 	if (stack->size_a == 3)
 		ft_sort_three(stack);
-	else if (stack->size_a > 3)
+	else if (stack->size_a > 1)
 	{
 		min_pos = ft_min_pos(stack->a, stack->size_a);
 		if (stack->size_a - min_pos > stack->size_a / 2)

@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:25:09 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/03 11:02:58 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:18:02 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	ft_check_double(t_stack *stack)
 		{
 			if (stack->a[j] == stack->a[i])
 			{
-				free (stack->a);
 				ft_printf("Error\n");
 				return (1);
 			}
