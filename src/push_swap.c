@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 11:03:53 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/04 14:18:08 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/05 15:59:54 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,42 @@ void	ft_sort_three(t_stack *stack)
 		ft_rotate(stack->a, 2, stack->size_a, "rra");
 }
 
+void	ft_push_sort(t_stack *stack, int pivot)
+{
+	int	i;
+
+	i = -1;
+	ft_printf("pivot: %d stack_b size: %d\n", pivot, stack->size_b);
+/* 	while (++i < stack->size_b)
+	{
+		ft_push_a(stack);
+		if (stack->a[i] > pivot)
+			ft_rotate(stack->a, i, stack->size_a, "ra");
+	} */
+}
+
 void	ft_push_swap(t_stack *stack)
+{
+	int	pivot;
+	int	i;
+	int	j;
+
+	j = stack->size_a;
+	i = -1;
+	pivot = stack->a[stack->size_a - 1];
+	while (++i < j)
+	{
+		if (stack->a[0] < pivot)
+			ft_push_b(stack);
+		ft_rotate(stack->a, i, stack->size_a, "ra");
+	}
+/* 	if (ft_check_sorted(stack->a, stack->size_a) == 1)
+		ft_push_swap(stack); */
+/* 	if (stack->size_a == 1)
+		ft_push_sort(stack, pivot); */
+}
+
+/* void	ft_push_swap(t_stack *stack)
 {
 	int	min_pos;
 
@@ -86,4 +121,53 @@ void	ft_push_swap(t_stack *stack)
 		if (stack->size_b > 0)
 			ft_push_a(stack);
 	}
+} */
+
+
+#include <stdio.h>
+
+void	quicksort(int arr[], int len)
+{
+	int	pivot;
+	int	left[len];
+	int	right[len];
+	int l_len = 0, r_len = 0;
+
+	if (len <= 1)
+		return ;
+	pivot = arr[len / 2];
+
+	for (int i = 0; i < len; i++)
+	{
+		if (arr[i] < pivot)
+			left[l_len++] = arr[i];
+		else if (arr[i] > pivot)
+			right[r_len++] = arr[i];
+	}
+
+    quicksort(left, l_len);
+    quicksort(right, r_len);
+
+    int i = 0;
+    for (int j = 0; j < l_len; j++) {
+        arr[i++] = left[j];
+    }
+    arr[i++] = pivot;
+    for (int j = 0; j < r_len; j++) {
+        arr[i++] = right[j];
+    }
+}
+
+int main() {
+    int arr[] = {5, 3, 8, 4, 2, 7, 1, 6};
+    int len = sizeof(arr) / sizeof(int);
+
+    quicksort(arr, len);
+
+    for (int i = 0; i < len; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
 }
