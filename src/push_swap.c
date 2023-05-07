@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 11:03:53 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/05 15:59:54 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/07 19:30:46 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ void	ft_push_swap(t_stack *stack)
 	j = stack->size_a;
 	i = -1;
 	pivot = stack->a[stack->size_a - 1];
-	while (++i < j)
+	while (++i < j - 1)
 	{
+		ft_printf("pivot: %d stack_a[%d]: %d\n", pivot, 0, stack->a[0]);
 		if (stack->a[0] < pivot)
 			ft_push_b(stack);
-		ft_rotate(stack->a, i, stack->size_a, "ra");
+		else
+			ft_rotate(stack->a, i, stack->size_a, "ra");
 	}
-/* 	if (ft_check_sorted(stack->a, stack->size_a) == 1)
-		ft_push_swap(stack); */
-/* 	if (stack->size_a == 1)
-		ft_push_sort(stack, pivot); */
+	if (ft_check_sorted(stack->a, stack->size_a) == 1)
+		ft_push_swap(stack);
 }
 
 /* void	ft_push_swap(t_stack *stack)
@@ -124,7 +124,7 @@ void	ft_push_swap(t_stack *stack)
 } */
 
 
-#include <stdio.h>
+/* #include <stdio.h>
 
 void	quicksort(int arr[], int len)
 {
@@ -170,4 +170,4 @@ int main() {
     printf("\n");
 
     return 0;
-}
+} */
