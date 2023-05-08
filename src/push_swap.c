@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 11:03:53 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/07 19:30:46 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/08 15:00:41 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	ft_push_sort(t_stack *stack, int pivot)
 	} */
 }
 
-void	ft_push_swap(t_stack *stack)
+/* void	ft_push_swap(t_stack *stack)
 {
 	int	pivot;
 	int	i;
@@ -99,9 +99,9 @@ void	ft_push_swap(t_stack *stack)
 	}
 	if (ft_check_sorted(stack->a, stack->size_a) == 1)
 		ft_push_swap(stack);
-}
+}*/
 
-/* void	ft_push_swap(t_stack *stack)
+void	ft_push_swap(t_stack *stack)
 {
 	int	min_pos;
 
@@ -121,7 +121,7 @@ void	ft_push_swap(t_stack *stack)
 		if (stack->size_b > 0)
 			ft_push_a(stack);
 	}
-} */
+}
 
 
 /* #include <stdio.h>

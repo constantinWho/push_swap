@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/07 19:37:23 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/08 13:39:21 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@ void	ft_print_output(t_stack	*stack)
 	ft_printf("stack_a: ");
 	while (i < stack->size_a)
 		ft_printf("%i ", stack->a[i++]);
-	ft_printf("\nsize_a: %d\n", stack->size_a);
 	i = 0;
 	ft_printf("\n");
 	ft_printf("stack_b: ");
 	while (i < stack->size_b)
 		ft_printf("%i ", stack->b[i++]);
-	ft_printf("\nsize_b: %d\n", stack->size_b);
 	ft_printf("\n");
 }
 
