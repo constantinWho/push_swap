@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: chustei <chustei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 11:03:53 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/10 17:26:12 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/10 21:38:30 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-int	ft_min_pos(int *stack_a, int size)
+int ft_min_pos(int *stack_a, int size)
 {
-	int	i;
-	int	pos;
-	int	min;
+	int i;
+	int pos;
+	int min;
 
 	pos = 0;
 	min = stack_a[0];
@@ -32,9 +32,9 @@ int	ft_min_pos(int *stack_a, int size)
 	return (pos);
 }
 
-void	ft_swap(int *a, int *b)
+void ft_swap(int *a, int *b)
 {
-	int	tmp;
+	int tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -42,9 +42,9 @@ void	ft_swap(int *a, int *b)
 	ft_printf("sa\n");
 }
 
-void	ft_sort_three(t_stack *stack)
+void ft_sort_three(t_stack *stack)
 {
-	if (stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] && \
+	if (stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] &&
 		stack->a[0] < stack->a[2])
 		ft_swap(&stack->a[0], &stack->a[1]);
 	else if (stack->a[0] > stack->a[1] && stack->a[1] > stack->a[2])
@@ -52,25 +52,25 @@ void	ft_sort_three(t_stack *stack)
 		ft_swap(&stack->a[0], &stack->a[1]);
 		ft_rotate(stack->a, 2, stack->size_a, "rra");
 	}
-	else if (stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] && \
-		stack->a[0] > stack->a[2])
+	else if (stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] &&
+			 stack->a[0] > stack->a[2])
 		ft_rotate(stack->a, 1, stack->size_a, "ra");
-	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] && \
-		stack->a[0] < stack->a[2])
+	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] &&
+			 stack->a[0] < stack->a[2])
 	{
 		ft_rotate(stack->a, 0, stack->size_a, "rra");
 		ft_swap(&stack->a[0], &stack->a[1]);
 	}
-	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] && \
-		stack->a[0] > stack->a[2])
+	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] &&
+			 stack->a[0] > stack->a[2])
 		ft_rotate(stack->a, 2, stack->size_a, "rra");
 }
 
-void	ft_sort_five(t_stack *stack)
+void ft_sort_five(t_stack *stack)
 {
-	int	i;
-	int	j;
-	int	min_pos;
+	int i;
+	int j;
+	int min_pos;
 
 	i = -1;
 	j = stack->size_a;
@@ -89,16 +89,16 @@ void	ft_sort_five(t_stack *stack)
 			ft_rotate(stack->a, 4, stack->size_a, "ra");
 	}
 	ft_sort_three(stack);
-	ft_push_a(stack);
-	ft_push_a(stack);
+	while (stack->size_a < 5)
+		ft_push_a(stack);
 }
 
-void	ft_sort(t_stack *stack)
+void ft_push_to_b(t_stack *stack)
 {
-	int	max;
-	int	i;
-	int	j;
-	int	ratio;
+	int max;
+	int i;
+	int j;
+	int ratio;
 
 	max = stack->size_a - 1;
 	ratio = 10;
@@ -109,40 +109,49 @@ void	ft_sort(t_stack *stack)
 		j = -1;
 		while (++j < max + 1)
 		{
-			if (stack->a[j] < ratio && stack->a[j] != max && \
-			stack->a[j] != max - 1 && stack->a[j] != max - 2 && \
-			stack->a[j] != max - 3 && stack->a[j] != max - 4)
+			if (stack->a[j] < ratio && stack->a[j] != max &&
+				stack->a[j] != max - 1 && stack->a[j] != max - 2 &&
+				stack->a[j] != max - 3 && stack->a[j] != max - 4)
 			{
 				if (j == 0)
 				{
 					ft_push_b(stack);
-/* 					ft_rotate(stack->b, j, stack->size_b, "rb"); */
 				}
 				if (max - j > max / 2)
 					ft_rotate(stack->a, j, stack->size_a, "ra");
 				else
 					ft_rotate(stack->a, j, stack->size_a, "rra");
-				break ;
+				break;
 			}
 		}
+		ratio += 10;
 	}
-/* 	ft_push_swap(stack);
-	if (stack->size_b > 0)
-		ft_push_a(stack); */
+	if (stack->size_a == 5)
+		ft_push_swap(stack);
+	ft_rotate(stack->a, 0, stack->size_a, "rra");
+	ft_printf("size_a: %d \n", stack->size_a);
 }
 
-void	ft_push_swap(t_stack *stack)
+void ft_push_to_a(t_stack *stack)
+{
+	ft_printf("stack-test %d\n", stack->size_b);
+}
+
+void ft_push_swap(t_stack *stack)
 {
 	if (stack->a[0] > stack->a[1] && stack->size_a == 2)
 		ft_swap(&stack->a[0], &stack->a[1]);
-/* 	ft_printf("size_a: %d\n", stack->size_a); */
+	/* 	ft_printf("size_a: %d\n", stack->size_a); */
 	if (stack->size_a == 3)
 		ft_sort_three(stack);
 	if (stack->size_a == 5)
 		ft_sort_five(stack);
 	if (stack->size_a > 5)
-		ft_sort(stack);
-/* 	ft_printf("size_a: %d\n", stack->size_a); */
+	{
+		ft_push_to_b(stack);
+		ft_push_to_a(stack);
+	}
+	/* 	ft_printf("size_a: %d\n", stack->size_a); */
 }
 
 /*
@@ -204,29 +213,29 @@ void	quicksort(int arr[], int len)
 			right[r_len++] = arr[i];
 	}
 
-    quicksort(left, l_len);
-    quicksort(right, r_len);
+	quicksort(left, l_len);
+	quicksort(right, r_len);
 
-    int i = 0;
-    for (int j = 0; j < l_len; j++) {
-        arr[i++] = left[j];
-    }
-    arr[i++] = pivot;
-    for (int j = 0; j < r_len; j++) {
-        arr[i++] = right[j];
-    }
+	int i = 0;
+	for (int j = 0; j < l_len; j++) {
+		arr[i++] = left[j];
+	}
+	arr[i++] = pivot;
+	for (int j = 0; j < r_len; j++) {
+		arr[i++] = right[j];
+	}
 }
 
 int main() {
-    int arr[] = {5, 3, 8, 4, 2, 7, 1, 6};
-    int len = sizeof(arr) / sizeof(int);
+	int arr[] = {5, 3, 8, 4, 2, 7, 1, 6};
+	int len = sizeof(arr) / sizeof(int);
 
-    quicksort(arr, len);
+	quicksort(arr, len);
 
-    for (int i = 0; i < len; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
+	for (int i = 0; i < len; i++) {
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
 
-    return 0;
+	return 0;
 } */
