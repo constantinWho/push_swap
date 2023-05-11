@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chustei <chustei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 11:03:53 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/10 21:38:30 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/11 20:45:19 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,48 +93,151 @@ void ft_sort_five(t_stack *stack)
 		ft_push_a(stack);
 }
 
-void ft_push_to_b(t_stack *stack)
+/* void	ft_push_to_b(t_stack *stack)
 {
-	int max;
-	int i;
-	int j;
-	int ratio;
+	int max = stack->size_a - 1;
+	int ratio = sqrt(stack->size_a);
+	int count = 0;
+	int i = 0;
+	int j = max;
+	while (i < j)
+	{
+		if (stack->a[i] < stack->a[j])
+		{
+			if (i <= ratio || j >= max - ratio)
+			{
+				ft_rotate(stack->a, i, stack->size_a, "ra");
+				count++;
+			}
+			else
+			{
+				ft_push_b(stack);
+				count++;
+			}
+			i++;
+		}
+		else
+		{
+			if (j >= max - ratio || i <= ratio)
+			{
+				ft_rotate(stack->a, j, stack->size_a, "rra");
+				count++;
+			}
+			else
+			{
+				ft_push_b(stack);
+				count++;
+			}
+			j--;
+		}
+		if (count >= ratio)
+		{
+			ratio += sqrt(stack->size_a);
+			count = 0;
+			i = 0;
+			j = max;
+		}
+	}
+} */
 
+int	ft_sqrt(int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i * i < nb)
+		i++;
+	return (i);
+}
+
+void	ft_push_to_b(t_stack *stack)
+{
+	int	max;
+	int	i;
+	int	j;
+	int	ratio;
+	int	count;
+
+	count = 0;
 	max = stack->size_a - 1;
-	ratio = 10;
+	if (max < 50)
+		ratio = 5;
+	if (max < 150)
+		ratio = 20;
+	else if (max < 600)
+		ratio = 50;
 	ft_printf("max: %d\n", max);
 	i = -1;
 	while (++i < max + 1)
 	{
 		j = -1;
+		if (stack->size_a == 3)
+			break ;
 		while (++j < max + 1)
 		{
-			if (stack->a[j] < ratio && stack->a[j] != max &&
-				stack->a[j] != max - 1 && stack->a[j] != max - 2 &&
-				stack->a[j] != max - 3 && stack->a[j] != max - 4)
+			if (stack->a[j] < ratio && stack->a[j] != max && \
+				stack->a[j] != max - 1 && stack->a[j] != max - 2)
 			{
-				if (j == 0)
-				{
-					ft_push_b(stack);
-				}
 				if (max - j > max / 2)
 					ft_rotate(stack->a, j, stack->size_a, "ra");
 				else
 					ft_rotate(stack->a, j, stack->size_a, "rra");
-				break;
+				if (j == 0)
+				{
+					ft_push_b(stack);
+					count++;
+				}
+				j = -1;
+				break ;
 			}
 		}
-		ratio += 10;
+		if (count == ratio)
+		{
+			if (max < 150)
+				ratio += 20;
+			else if (max < 600)
+				ratio += 50;
+			i = -1;
+		}
+		if (stack->size_a > 3)
+			j = -1;
 	}
-	if (stack->size_a == 5)
+	if (stack->size_a == 3)
 		ft_push_swap(stack);
-	ft_rotate(stack->a, 0, stack->size_a, "rra");
 	ft_printf("size_a: %d \n", stack->size_a);
 }
 
 void ft_push_to_a(t_stack *stack)
 {
-	ft_printf("stack-test %d\n", stack->size_b);
+	int	i;
+	int	j;
+	int	max;
+
+	max = stack->a[0] - 1;
+	j = -1;
+	while (++j < max + 1)
+	{
+		i = -1;
+		while (++i < stack->size_b)
+		{
+			if (stack->b[i] == max)
+			{
+				if (max - i > max / 2)
+					ft_rotate(stack->b, i, stack->size_b, "rb");
+				else
+					ft_rotate(stack->b, i, stack->size_b, "rrb");
+				if (i == 0)
+				{
+					ft_push_a(stack);
+					max--;
+					i = -1;
+				}
+				break ;
+			}
+		}
+		if (stack->size_b != 0)
+			j = -1;
+	}
 }
 
 void ft_push_swap(t_stack *stack)
