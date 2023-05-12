@@ -6,12 +6,11 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 11:11:44 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/10 13:05:00 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/12 11:20:17 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
-
 
 void	ft_push_b(t_stack *stack)
 {

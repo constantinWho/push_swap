@@ -6,7 +6,7 @@
 /*   By: chustei <chustei@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:22:23 by chustei           #+#    #+#             */
-/*   Updated: 2023/05/10 16:41:15 by chustei          ###   ########.fr       */
+/*   Updated: 2023/05/12 15:37:25 by chustei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_quick_sort(int *stack, int low, int high)
 	}
 }
 
-int	*ft_stack_copy(int *stack, int size)
+int	*ft_stack_copy_for_sorting(int *stack, int size)
 {
 	int	i;
 	int	*stack_copy;
@@ -75,12 +75,8 @@ void	ft_store_stack_a(char **av, t_stack *stack)
 	i = 0;
 	while (av[++i])
 		stack->a[i - 1] = ft_atoi(av[i]);
-	stack_copy = ft_stack_copy(stack->a, stack->size_a);
+	stack_copy = ft_stack_copy_for_sorting(stack->a, stack->size_a);
 	ft_quick_sort(stack_copy, 0, stack->size_a - 1);
-/* 	i = -1;
-	ft_printf("stack_a: ");
-	while (++i < stack->size_a)
-		ft_printf("%i ", stack->a[i]); */
 	i = -1;
 	while (++i < stack->size_a)
 	{
@@ -94,11 +90,10 @@ void	ft_store_stack_a(char **av, t_stack *stack)
 			}
 		}
 	}
-/* 	ft_printf("\n"); */
 	free(stack_copy);
 }
 
-void	ft_print_output(t_stack	*stack)
+/* void	ft_print_output(t_stack	*stack)
 {
 	int	i;
 
@@ -113,7 +108,7 @@ void	ft_print_output(t_stack	*stack)
 		ft_printf("%i ", stack->b[i++]);
 	ft_printf("\n");
 }
-
+ */
 int	ft_execute(char **av, t_stack *stack)
 {
 	if (ft_check_numeric(av) == 1 || ft_check_atoi(av) == 1)
@@ -125,9 +120,7 @@ int	ft_execute(char **av, t_stack *stack)
 	ft_store_stack_a(av, stack);
 	if (ft_check_double(stack) == 1)
 		return (1);
-	ft_print_output(stack);
 	ft_push_swap(stack);
-	ft_print_output(stack);
 	return (0);
 }
 
