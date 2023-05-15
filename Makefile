@@ -5,7 +5,7 @@ LIBFT_DIR = lib/libft
 
 # List of source files
 SRCS = src/main.c src/check_utils.c src/push_swap.c src/push.c src/rotate.c \
-       src/init_and_free.c \
+       src/init_and_free.c src/push_to_b.c src/push_to_a.c\
 
 # List of object files to build
 OBJS = $(SRCS:.c=.o)
